@@ -22,7 +22,7 @@ angular.module('starter', [
     });
 
     var sql = 'CREATE TABLE IF NOT EXISTS ' +
-      'users(id number primary key, ' +
+      'users(id integer primary key, ' +
       'fullname text, position text, hospital text)';
 
     var sqlInsert = 'INSERT INTO users(fullname, position, hospital) ' +
@@ -64,71 +64,42 @@ angular.module('starter', [
   // Each state's controller can be found in controllers.js
   $stateProvider
 
-  // setup an abstract state for the tabs directive
+    // setup an abstract state for the tabs directive
     .state('tab', {
-    url: '/tab',
-    abstract: true,
-    templateUrl: 'templates/tabs.html'
-  })
-
-  // Each tab has its own nav history stack:
-
-  .state('tab.dash', {
-    url: '/dash', // /tab/dash
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
-    }
-  })
-
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
-      }
+      url: '/tab',
+      abstract: true,
+      templateUrl: 'templates/tabs.html'
     })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
+
+    // Each tab has its own nav history stack:
+
+    .state('tab.dash', {
+      url: '/dash', // /tab/dash
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
+        'tab-dash': {
+          templateUrl: 'templates/tab-dash.html',
+          controller: 'DashCtrl'
         }
       }
     })
 
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+    .state('tab.setting', {
+      url: '/setting',
+      views: {
+        'tab-setting': {
+          templateUrl: 'templates/tab-setting.html'
+        }
       }
-    }
-  })
+    })
 
-  .state('tab.setting', {
-    url: '/setting',
-    views: {
-      'tab-setting': {
-        templateUrl: 'templates/tab-setting.html'
+    .state('tab.setting-connection', {
+      url: '/setting-connection',
+      views: {
+        'tab-setting': {
+          templateUrl: 'templates/tab-setting-connection.html'
+        }
       }
-    }
-  })
-
-  .state('tab.setting-connection', {
-    url: '/setting-connection',
-    views: {
-      'tab-setting': {
-        templateUrl: 'templates/tab-setting-connection.html'
-      }
-    }
-  });
+    });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/dash');

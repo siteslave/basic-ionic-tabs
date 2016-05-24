@@ -1,9 +1,14 @@
 <ion-view view-title="Dashboard">
   <ion-content class="padding">
-    <ul>
-      <li ng-repeat="u in users">
-        {{ u.fullname }} - {{ u.position }}, {{ u.hospital }}
-      </li>
-    </ul>
+    <div class="list">
+      <a class="item item-icon-left" href="#"
+      ng-repeat="u in users">
+        <i class="icon ion-ios-monitor positive"></i>
+        {{u.fullname}}
+        <span class="item-note">
+          {{ u.position }}
+        </span>
+      </a>
+    </div>
   </ion-content>
 </ion-view>
