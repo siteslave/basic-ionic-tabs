@@ -26,17 +26,17 @@ angular.module('starter', [
       'fullname text, position text, hospital text)';
 
     var sqlInsert = 'INSERT INTO users(fullname, position, hospital) ' +
-    'VALUES(?, ?, ?)';
+      'VALUES(?, ?, ?)';
+    var sqlDelete = 'DELETE FROM users';
 
     $cordovaSQLite.execute($rootScope.db, sql, [])
       .then(function (res) {
         // success
         console.log('Create table success');
-        return $cordovaSQLite.execute($rootScope.db, sqlInsert,
-          ['สถิตย์ เรียนพิศ', 'นักวิชาการคอมพิวเตอร์', 'รพช.กันทรวิชัย']);
+        return $cordovaSQLite.execute($rootScope.db, sqlDelete, []);
       })
       .then(function (res) {
-        console.log('Insert success');
+        console.log('Delete success');
       }, function (err) {
         // error
         console.log('Error: ' + JSON.stringify(err));

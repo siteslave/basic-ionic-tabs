@@ -29,8 +29,11 @@ angular.module('starter.controllers', [])
               obj.hospital = res.rows.item(i).hospital;
 
               $scope.users.push(obj);
-              $ionicLoading.hide();
+
             }
+
+            $ionicLoading.hide();
+
           }, function (err) {
             $ionicLoading.hide();
             alert(JSON.stringify(err));
