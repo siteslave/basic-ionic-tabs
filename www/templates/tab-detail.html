@@ -6,6 +6,9 @@
   <ion-content class="padding">
 
     <div class="list">
+      <div class="item item-divider">
+          Profile
+        </div>
       <label class="item item-input">
         <input type="text" ng-model="user.fullname" placeholder="ชื่อ-สกุล">
       </label>
@@ -15,6 +18,22 @@
       <label class="item item-input">
         <input type="text" ng-model="user.hospital" placeholder="ที่ทำงาน">
       </label>
+      <div class="item item-divider">
+          My Picture
+        </div>
+
+        <div class="item item-image">
+          <img ng-src="{{user.image}}">
+        </div>
+
+        <a class="item item-icon-left assertive" ng-click="takePicture()">
+          <i class="icon ion-ios-camera"></i>
+          Take picture
+        </a>
+
+    </div>
+
+
     </div>
 
   </ion-content>

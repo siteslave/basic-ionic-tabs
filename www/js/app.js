@@ -16,27 +16,25 @@ angular.module('starter', [
   $ionicPlatform.ready(function () {
 
     $rootScope.db = $cordovaSQLite.openDB({
-      name: "users.db",
+      name: "myusers.db",
       location: 'default',
       iosDatabaseLocation: 'Library'
     });
 
-    var sql = 'CREATE TABLE IF NOT EXISTS ' +
+    var sqlCreateTable = 'CREATE TABLE IF NOT EXISTS ' +
       'users(id integer primary key, ' +
-      'fullname text, position text, hospital text)';
+      'fullname text, position text, hospital text, image text)';
 
-    var sqlInsert = 'INSERT INTO users(fullname, position, hospital) ' +
-      'VALUES(?, ?, ?)';
     var sqlDelete = 'DELETE FROM users';
 
-    $cordovaSQLite.execute($rootScope.db, sql, [])
+    $cordovaSQLite.execute($rootScope.db, sqlCreateTable, [])
+      // .then(function (res) {
+      //   // success
+      //   console.log('Create table success');
+      //   return $cordovaSQLite.execute($rootScope.db, sqlDelete, []);
+      // })
       .then(function (res) {
-        // success
-        console.log('Create table success');
-        return $cordovaSQLite.execute($rootScope.db, sqlDelete, []);
-      })
-      .then(function (res) {
-        console.log('Delete success');
+        //console.log('Delete success');
       }, function (err) {
         // error
         console.log('Error: ' + JSON.stringify(err));
@@ -99,6 +97,16 @@ angular.module('starter', [
         'tab-dash': {
           templateUrl: 'templates/tab-detail.html',
           controller: 'DetailCtrl'
+        }
+      }
+    })
+
+    .state('tab.map', {
+      url: '/map', // /tab/dash
+      views: {
+        'tab-map': {
+          templateUrl: 'templates/tab-map.html',
+          controller: 'MapCtrl'
         }
       }
     })

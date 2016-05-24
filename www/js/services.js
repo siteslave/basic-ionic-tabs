@@ -18,13 +18,13 @@ angular.module('starter.services', [])
         return q.promise;
       },
 
-      save: function (db, fullname, position, hospital) {
+      save: function (db, fullname, position, hospital, image) {
         var q = $q.defer();
 
-        var sql = 'INSERT INTO users(fullname, position, hospital) ' +
-        'VALUES(?, ?, ?)';
+        var sql = 'INSERT INTO users(fullname, position, hospital, image) ' +
+        'VALUES(?, ?, ?, ?)';
 
-        $cordovaSQLite.execute(db, sql, [fullname, position, hospital])
+        $cordovaSQLite.execute(db, sql, [fullname, position, hospital, image])
           .then(function (res) {
             q.resolve(res);
           }, function (err) {
@@ -34,13 +34,13 @@ angular.module('starter.services', [])
         return q.promise;
       },
 
-      update: function (db, id, fullname, position, hospital) {
+      update: function (db, id, fullname, position, hospital, image) {
         var q = $q.defer();
 
-        var sql = 'UPDATE users SET fullname=?, position=?, hospital=? ' +
+        var sql = 'UPDATE users SET fullname=?, position=?, hospital=?, image=?' +
         'WHERE id=?';
 
-        $cordovaSQLite.execute(db, sql, [fullname, position, hospital, id])
+        $cordovaSQLite.execute(db, sql, [fullname, position, hospital, image, id])
           .then(function (res) {
             q.resolve(res);
           }, function (err) {

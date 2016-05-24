@@ -1,4 +1,4 @@
-<ion-view view-title="Dashboard">
+<ion-view view-title="Dashboard" cache-view="false">
   <ion-nav-buttons side="primary">
     <a class="button button-icon icon ion-android-add"
     ui-sref="tab.dash-new"></a>
@@ -11,10 +11,10 @@
           <input type="text" placeholder="Search" ng-model="query">
         </label>
       </div>
-      <a class="item item-icon-left"
+      <a class="item item-avatar"
       href="#/tab/detail/{{u.id}}"
       ng-repeat="u in users | filter: query">
-        <i class="icon ion-ios-monitor positive"></i>
+      <img ng-src="{{u.image}}">
         {{u.fullname}}
         <span class="item-note">
           {{ u.position }}
