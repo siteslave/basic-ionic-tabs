@@ -83,6 +83,16 @@ angular.module('starter', [
       }
     })
 
+    .state('tab.dash-new', {
+      url: '/dash-new', // /tab/dash
+      views: {
+        'tab-dash': {
+          templateUrl: 'templates/tab-new.html',
+          controller: 'NewCtrl'
+        }
+      }
+    })
+
     .state('tab.setting', {
       url: '/setting',
       views: {

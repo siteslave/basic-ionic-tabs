@@ -1,11 +1,21 @@
 angular.module('starter.controllers', [])
 
   .controller('DashCtrl', function ($scope, $log, $ionicPlatform,
-    $rootScope, UserService) {
+    $rootScope, UserService, $ionicLoading) {
+
+    $scope.$on("$ionicView.beforeEnter", function (event, data) {
+      $scope.getUsers();
+    });
 
     $scope.users = [];
 
     $scope.getUsers = function () {
+
+
+      $ionicLoading.show({
+          template: '<ion-spinner icon="android"></ion-spinner>'
+      });
+
       $ionicPlatform.ready(function () {
         UserService.getUsers($rootScope.db)
           .then(function (res) {
@@ -19,13 +29,29 @@ angular.module('starter.controllers', [])
               obj.hospital = res.rows.item(i).hospital;
 
               $scope.users.push(obj);
+              $ionicLoading.hide();
             }
           }, function (err) {
+            $ionicLoading.hide();
             alert(JSON.stringify(err));
           });
       });
     };
 
     $scope.getUsers();
+
+  })
+  .controller('NewCtrl', function ($scope, $state, $rootScope, UserService) {
+
+    $scope.user = {};
+
+    $scope.save = function () {
+      UserService.save($rootScope.db, $scope.user.fullname, $scope.user.position, $scope.user.hospital)
+        .then(function () {
+          $state.go('tab.dash');
+        }, function (err) {
+          alert(JSON.stringify(err));
+        });
+    };
 
   });
