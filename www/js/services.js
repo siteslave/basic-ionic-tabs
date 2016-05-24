@@ -32,6 +32,52 @@ angular.module('starter.services', [])
           });
 
         return q.promise;
+      },
+
+      update: function (db, id, fullname, position, hospital) {
+        var q = $q.defer();
+
+        var sql = 'UPDATE users SET fullname=?, position=?, hospital=? ' +
+        'WHERE id=?';
+
+        $cordovaSQLite.execute(db, sql, [fullname, position, hospital, id])
+          .then(function (res) {
+            q.resolve(res);
+          }, function (err) {
+            q.reject(err);
+          });
+
+        return q.promise;
+      },
+
+      detail: function (db, id) {
+        var q = $q.defer();
+
+        var sql = 'SELECT * FROM users WHERE id=?';
+
+        $cordovaSQLite.execute(db, sql, [id])
+          .then(function (res) {
+            q.resolve(res.rows.item(0));
+          }, function (err) {
+            q.reject(err);
+          });
+
+        return q.promise;
+      },
+
+      remove: function (db, id) {
+        var q = $q.defer();
+
+        var sql = 'DELETE FROM users WHERE id=?';
+
+        $cordovaSQLite.execute(db, sql, [id])
+          .then(function (res) {
+            q.resolve();
+          }, function (err) {
+            q.reject(err);
+          });
+
+        return q.promise;
       }
     }
 

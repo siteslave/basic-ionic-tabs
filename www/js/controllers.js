@@ -12,7 +12,7 @@ angular.module('starter.controllers', [])
     $scope.getUsers = function () {
 
       $ionicLoading.show({
-          template: '<ion-spinner icon="android"></ion-spinner>'
+        template: '<ion-spinner icon="android"></ion-spinner>'
       });
 
       $scope.users = [];
@@ -26,6 +26,7 @@ angular.module('starter.controllers', [])
 
               var obj = {};
 
+              obj.id = res.rows.item(i).id;
               obj.fullname = res.rows.item(i).fullname;
               obj.position = res.rows.item(i).position;
               obj.hospital = res.rows.item(i).hospital;
@@ -58,5 +59,50 @@ angular.module('starter.controllers', [])
           alert(JSON.stringify(err));
         });
     };
+
+  })
+  .controller('DetailCtrl', function ($scope,$state, $ionicPopup, $rootScope, $stateParams, UserService) {
+
+    $scope.id = $stateParams.id;
+
+    UserService.detail($rootScope.db, $scope.id)
+      .then(function (user) {
+        //alert(JSON.stringify(user));
+        $scope.user = user;
+      }, function (err) {
+        alert(JSON.stringify(err));
+      });
+
+
+    $scope.save = function () {
+      UserService.update($rootScope.db, $scope.id, $scope.user.fullname, $scope.user.position, $scope.user.hospital)
+        .then(function () {
+          $state.go('tab.dash');
+        }, function (err) {
+          alert(JSON.stringify(err));
+        });
+    };
+
+    $scope.remove = function () {
+      $ionicPopup.confirm({
+       title: 'Are you sure?',
+       template: 'คุณต้องการลบ ใช่หรือไม่?'
+      })
+        .then(function (res) {
+          if (res) {
+            UserService.remove($rootScope.db, $scope.id)
+              .then(function () {
+                $state.go('tab.dash');
+              }, function (err) {
+                alert(JSON.stringify(err));
+              });
+          } else {
+            //console.log('You are not sure');
+          }
+      });
+
+
+    };
+
 
   });

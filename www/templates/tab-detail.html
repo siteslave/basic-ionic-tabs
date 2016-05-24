@@ -1,0 +1,21 @@
+<ion-view view-title="User detail">
+  <ion-nav-buttons side="primary">
+    <a class="button button-icon icon ion-android-send" ng-click="save()"></a>
+    <a class="button button-icon icon ion-trash-a" ng-click="remove()"></a>
+  </ion-nav-buttons>
+  <ion-content class="padding">
+
+    <div class="list">
+      <label class="item item-input">
+        <input type="text" ng-model="user.fullname" placeholder="ชื่อ-สกุล">
+      </label>
+      <label class="item item-input">
+        <input type="text" ng-model="user.position" placeholder="ตำแหน่ง">
+      </label>
+      <label class="item item-input">
+        <input type="text" ng-model="user.hospital" placeholder="ที่ทำงาน">
+      </label>
+    </div>
+
+  </ion-content>
+</ion-view>

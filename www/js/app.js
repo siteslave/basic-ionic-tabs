@@ -93,6 +93,16 @@ angular.module('starter', [
       }
     })
 
+    .state('tab.dash-detail', {
+      url: '/detail/:id', // /tab/dash
+      views: {
+        'tab-dash': {
+          templateUrl: 'templates/tab-detail.html',
+          controller: 'DetailCtrl'
+        }
+      }
+    })
+
     .state('tab.setting', {
       url: '/setting',
       views: {

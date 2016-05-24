@@ -5,8 +5,15 @@
   </ion-nav-buttons>
   <ion-content class="padding">
     <div class="list">
-      <a class="item item-icon-left" href="#"
-      ng-repeat="u in users">
+      <div class="list list-inset">
+        <label class="item item-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input type="text" placeholder="Search" ng-model="query">
+        </label>
+      </div>
+      <a class="item item-icon-left"
+      href="#/tab/detail/{{u.id}}"
+      ng-repeat="u in users | filter: query">
         <i class="icon ion-ios-monitor positive"></i>
         {{u.fullname}}
         <span class="item-note">
