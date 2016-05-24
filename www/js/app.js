@@ -5,10 +5,43 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', [
+  'ionic',
+  'ngCordova',
+  'starter.controllers',
+  'starter.services'
+])
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
+.run(function($ionicPlatform, $cordovaSQLite, $rootScope) {
+  $ionicPlatform.ready(function () {
+
+    $rootScope.db = $cordovaSQLite.openDB({
+      name: "users.db",
+      location: 'default',
+      iosDatabaseLocation: 'Library'
+    });
+
+    var sql = 'CREATE TABLE IF NOT EXISTS ' +
+      'users(id number primary key, ' +
+      'fullname text, position text, hospital text)';
+
+    var sqlInsert = 'INSERT INTO users(fullname, position, hospital) ' +
+    'VALUES(?, ?, ?)';
+
+    $cordovaSQLite.execute($rootScope.db, sql, [])
+      .then(function (res) {
+        // success
+        console.log('Create table success');
+        return $cordovaSQLite.execute($rootScope.db, sqlInsert,
+          ['สถิตย์ เรียนพิศ', 'นักวิชาการคอมพิวเตอร์', 'รพช.กันทรวิชัย']);
+      })
+      .then(function (res) {
+        console.log('Insert success');
+      }, function (err) {
+        // error
+        console.log('Error: ' + JSON.stringify(err));
+      });
+
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
