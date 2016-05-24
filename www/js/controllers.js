@@ -11,12 +11,14 @@ angular.module('starter.controllers', [])
 
     $scope.getUsers = function () {
 
-
       $ionicLoading.show({
           template: '<ion-spinner icon="android"></ion-spinner>'
       });
 
+      $scope.users = [];
+
       $ionicPlatform.ready(function () {
+
         UserService.getUsers($rootScope.db)
           .then(function (res) {
             for (var i = 0; i <= res.rows.length - 1; i++) {
