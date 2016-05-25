@@ -171,15 +171,22 @@ angular.module('starter.controllers', [])
   .controller('MapCtrl', function () {
 
   })
-  .controller('PushCtrl', function ($scope, $rootScope, $ionicPopup, $http, PushService) {
+  .controller('PushCtrl', function ($scope, $ionicLoading, $rootScope, $ionicPopup, $http, PushService) {
     $scope.users = [];
 
     $scope.getUsers = function () {
+
+      $ionicLoading.show({
+        template: '<ion-spinner icon="android"></ion-spinner>'
+      });
+
       PushService.getUsers()
         .then(function (data) {
-          alert(JSON.stringify(data.rows));
+          // alert(JSON.stringify(data.rows));
           $scope.users = data.rows;
+          $ionicLoading.hide();
         }, function (err) {
+          $ionicLoading.hide();
           console.log(err);
         });
     };
@@ -190,6 +197,9 @@ angular.module('starter.controllers', [])
       $scope.getUsers();
     });
 
+    $scope.doRefresh = function () {
+      $scope.getUsers();
+    };
 
     $scope.sendMessage = function () {
 
