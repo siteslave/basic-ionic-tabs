@@ -184,10 +184,13 @@ angular.module('starter.controllers', [])
         .then(function (data) {
           // alert(JSON.stringify(data.rows));
           $scope.users = data.rows;
+          $scope.$broadcast('scroll.refreshComplete');
           $ionicLoading.hide();
         }, function (err) {
           $ionicLoading.hide();
           console.log(err);
+          $scope.$broadcast('scroll.refreshComplete');
+
         });
     };
 
