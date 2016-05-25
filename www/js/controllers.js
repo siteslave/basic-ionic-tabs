@@ -23,7 +23,7 @@ angular.module('starter.controllers', [])
           .then(function (res) {
             for (var i = 0; i <= res.rows.length - 1; i++) {
 
-              $log.info(JSON.stringify(res.rows.item(i)));
+              //$log.info(JSON.stringify(res.rows.item(i)));
 
               var obj = {};
 
@@ -52,13 +52,16 @@ angular.module('starter.controllers', [])
     };
 
   })
-  .controller('NewCtrl', function ($scope, $log, $state, $rootScope, $ionicPlatform, $cordovaCamera, UserService) {
+  .controller('NewCtrl', function ($scope, $log, $state,
+    $rootScope, $ionicPlatform, $cordovaCamera, UserService) {
 
     $scope.user = {};
     $scope.image = {};
 
     $scope.takePicture = function () {
+
       $ionicPlatform.ready(function () {
+
         var options = {
           quality: 100,
           destinationType: Camera.DestinationType.DATA_URL,
@@ -71,17 +74,22 @@ angular.module('starter.controllers', [])
           correctOrientation: true
         };
 
-        $cordovaCamera.getPicture(options).then(function (imageData) {
-          $log.info(imageData);
-          $scope.image.src = "data:image/jpeg;base64," + imageData;
-        }, function (err) {
-          $log.error(err);
-        });
+        $cordovaCamera.getPicture(options)
+          .then(function (imageData) {
+            $log.info(imageData);
+            $scope.image.src = "data:image/jpeg;base64," + imageData;
+            $scope.image_src = imageData;
+
+          }, function (err) {
+            $log.error(err);
+          });
       });
     };
 
     $scope.save = function () {
-      UserService.save($rootScope.db, $scope.user.fullname, $scope.user.position, $scope.user.hospital, $scope.image.src)
+      UserService.save($rootScope.db,
+        $scope.user.fullname, $scope.user.position,
+        $scope.user.hospital, $scope.image.src)
         .then(function () {
           $state.go('tab.dash');
         }, function (err) {
@@ -128,7 +136,8 @@ angular.module('starter.controllers', [])
     };
 
     $scope.save = function () {
-      UserService.update($rootScope.db, $scope.id, $scope.user.fullname, $scope.user.position, $scope.user.hospital, $scope.user.image)
+      UserService.update($rootScope.db, $scope.id, $scope.user.fullname,
+        $scope.user.position, $scope.user.hospital, $scope.user.image)
         .then(function () {
           $state.go('tab.dash');
         }, function (err) {

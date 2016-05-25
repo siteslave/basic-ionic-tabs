@@ -25,7 +25,14 @@
       "locator": "https://github.com/litehelpers/Cordova-sqlite-storage.git",
       "id": "cordova-sqlite-storage"
     },
-    "cordova-plugin-camera"
+    "cordova-plugin-camera",
+    {
+      "variables": {
+        "SENDER_ID": "186962992070"
+      },
+      "locator": "phonegap-plugin-push",
+      "id": "phonegap-plugin-push"
+    }
   ],
   "cordovaPlatforms": [
     "android"

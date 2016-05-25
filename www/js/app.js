@@ -15,6 +15,24 @@ angular.module('starter', [
 .run(function($ionicPlatform, $cordovaSQLite, $rootScope) {
   $ionicPlatform.ready(function () {
 
+    var push = PushNotification.init({
+        android: {
+            senderID: "642908727095"
+        }
+    });
+
+    push.on('registration', function(data) {
+      console.log(data.registrationId);
+    });
+
+    push.on('notification', function(data) {
+      console.log(data);
+    });
+
+    push.on('error', function(e) {
+      console.log(e.message);
+    });
+
     $rootScope.db = $cordovaSQLite.openDB({
       name: "myusers.db",
       location: 'default',
