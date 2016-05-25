@@ -12,7 +12,7 @@ angular.module('starter', [
   'starter.services'
 ])
 
-.run(function($ionicPlatform, $cordovaSQLite, $rootScope) {
+.run(function($ionicPlatform, $http, $cordovaSQLite, $rootScope) {
   $ionicPlatform.ready(function () {
 
     var push = PushNotification.init({
@@ -21,8 +21,21 @@ angular.module('starter', [
         }
     });
 
-    push.on('registration', function(data) {
-      console.log(data.registrationId);
+    push.on('registration', function (data) {
+      var username = 'satit';
+      var token = data.registrationId;
+
+      $http.post('http://172.16.0.113:3000/register', {
+        username: username,
+        token: token
+      })
+        .success(function (data) {
+          console.log(data);
+        })
+        .error(function () {
+          console.log('Connection failed');
+        });
+      //console.log(data.registrationId);
     });
 
     push.on('notification', function(data) {
