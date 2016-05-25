@@ -4,6 +4,11 @@
     ui-sref="tab.dash-new"></a>
   </ion-nav-buttons>
   <ion-content class="padding">
+      <ion-refresher
+        pulling-text="Pull to refresh..."
+        on-refresh="doRefresh()">
+      </ion-refresher>
+
     <div class="list">
       <div class="list list-inset">
         <label class="item item-input">

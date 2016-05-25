@@ -36,14 +36,19 @@ angular.module('starter.controllers', [])
               $scope.users.push(obj);
 
             }
-
+            $scope.$broadcast('scroll.refreshComplete');
             $ionicLoading.hide();
 
           }, function (err) {
             $ionicLoading.hide();
+            $scope.$broadcast('scroll.refreshComplete');
             alert(JSON.stringify(err));
           });
       });
+    };
+
+    $scope.doRefresh = function () {
+      $scope.getUsers();
     };
 
   })
