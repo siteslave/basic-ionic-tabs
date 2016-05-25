@@ -1,5 +1,22 @@
 angular.module('starter.services', [])
 
+  .factory('PushService', function ($q, $http) {
+    return {
+      getUsers: function () {
+        var q = $q.defer();
+        $http.get('http://192.168.43.76:3000/users/list')
+          .success(function (data) {
+            q.resolve(data);
+          })
+          .error(function () {
+            q.reject('Connection failed');
+          });
+
+
+        return q.promise;
+      }
+    }
+  })
   .factory('UserService', function ($q, $cordovaSQLite) {
 
     return {

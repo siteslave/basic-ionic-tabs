@@ -170,4 +170,77 @@ angular.module('starter.controllers', [])
   })
   .controller('MapCtrl', function () {
 
+  })
+  .controller('PushCtrl', function ($scope, $rootScope, $ionicPopup, $http, PushService) {
+    $scope.users = [];
+
+    $scope.getUsers = function () {
+      PushService.getUsers()
+        .then(function (data) {
+          alert(JSON.stringify(data.rows));
+          $scope.users = data.rows;
+        }, function (err) {
+          console.log(err);
+        });
+    };
+
+    // $scope.getUsers();
+
+    $scope.$on("$ionicView.enter", function (event, data) {
+      $scope.getUsers();
+    });
+
+
+    $scope.sendMessage = function () {
+
+      $scope.data = {};
+
+      $ionicPopup.show({
+        template: '<input type="text" ng-model="data.message">',
+        title: 'Enter Message',
+        subTitle: 'Enter you message to send',
+        scope: $scope,
+        buttons: [
+          { text: 'Cancel' },
+          {
+            text: '<b>Send</b>',
+            type: 'button-positive',
+            onTap: function (e) {
+              if (!$scope.data.message) {
+                //don't allow the user to close unless he enters wifi password
+                e.preventDefault();
+              } else {
+                return $scope.data.message;
+              }
+            }
+          },
+        ]
+      })
+        .then(function (message) {
+          //console.log('Tapped!', res);
+          var message = message;
+          var username = $rootScope.username;
+
+          $http.post('http://192.168.43.76:3000/send', {
+            username: username,
+            message: message
+          })
+            .success(function (data) {
+              if (data.ok) {
+                ///
+              } else {
+                $ionicPopup.alert({
+                  title: 'Error',
+                  template: 'Message don\'t sent'
+                });
+              }
+            })
+            .error(function () {
+              console.log('Connection failed');
+            });
+
+        });
+     };
+
+
   });

@@ -12,7 +12,7 @@ angular.module('starter', [
   'starter.services'
 ])
 
-.run(function($ionicPlatform, $http, $cordovaSQLite, $rootScope) {
+.run(function($ionicPlatform, $ionicPopup, $http, $cordovaSQLite, $rootScope) {
   $ionicPlatform.ready(function () {
 
     var push = PushNotification.init({
@@ -22,11 +22,11 @@ angular.module('starter', [
     });
 
     push.on('registration', function (data) {
-      var username = 'satit';
+      $rootScope.username = 'satit';
       var token = data.registrationId;
 
-      $http.post('http://172.16.0.113:3000/register', {
-        username: username,
+      $http.post('http://192.168.43.76:3000/register', {
+        username: $rootScope.username,
         token: token
       })
         .success(function (data) {
@@ -38,8 +38,11 @@ angular.module('starter', [
       //console.log(data.registrationId);
     });
 
-    push.on('notification', function(data) {
-      console.log(data);
+    push.on('notification', function (data) {
+      $ionicPopup.alert({
+        title: 'New message',
+        template: data.message
+      });
     });
 
     push.on('error', function(e) {
@@ -101,6 +104,16 @@ angular.module('starter', [
     })
 
     // Each tab has its own nav history stack:
+
+    .state('tab.push', {
+      url: '/push',
+      views: {
+        'tab-push': {
+          templateUrl: 'templates/tab-push.html',
+          controller: 'PushCtrl'
+        }
+      }
+    })
 
     .state('tab.dash', {
       url: '/dash', // /tab/dash
